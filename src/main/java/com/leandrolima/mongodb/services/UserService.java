@@ -9,6 +9,7 @@ import com.leandrolima.mongodb.domain.User;
 import com.leandrolima.mongodb.dto.UserDTO;
 import com.leandrolima.mongodb.repository.UserRepository;
 import com.leandrolima.mongodb.services.exception.ObjectNotFoundException;
+
 @Service
 public class UserService {
 
@@ -28,9 +29,14 @@ public class UserService {
 
 	}
 
-	public User fromDTO(UserDTO objDto) {
-		return new User(objDto.getId(), objDto.getName(),objDto.getEmail());
-		
+	public void delete(String id) {
+		findById(id);
+		repo.deleteById(id);
 	}
-		
+
+	public User fromDTO(UserDTO objDto) {
+		return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
+
+	}
+
 }
