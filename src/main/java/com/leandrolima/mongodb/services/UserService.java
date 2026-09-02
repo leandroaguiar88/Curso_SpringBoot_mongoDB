@@ -28,6 +28,19 @@ public class UserService {
 		return repo.insert(obj);
 
 	}
+	public User update(User obj) {
+	    User newObj = repo.findById(obj.getId())
+	        .orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+	    
+	    updateData(newObj, obj);
+	    return repo.save(newObj);
+	}
+
+	private void updateData(User newObj, User obj) {
+		newObj.setName(obj.getName());
+		newObj.setEmail(obj.getEmail());
+		
+	}
 
 	public void delete(String id) {
 		findById(id);
