@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.leandrolima.mongodb.domain.Post;
 import com.leandrolima.mongodb.domain.User;
 import com.leandrolima.mongodb.dto.UserDTO;
 import com.leandrolima.mongodb.services.UserService;
@@ -30,6 +31,7 @@ public class UserResource {
 		List<UserDTO> ListDto = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(ListDto);
 	}
+	
 
 	@RequestMapping(value = "/(id)", method = RequestMethod.GET)
 	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
@@ -60,4 +62,9 @@ public class UserResource {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+	@RequestMapping(value = "/(id)", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+		User obj = service.findById(id);
+		return ResponseEntity.ok().body(obj.getPosts());
+}
 }
